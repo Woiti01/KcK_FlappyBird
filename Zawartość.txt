@@ -1,0 +1,8 @@
+Flappy bird:
+-Postać przeskakuje między rurami
+-zmienna szerokość dziury, odległość między rurami i prędkość ptaka
+-input - spacja?
+zrobić menu z opcjami
+GIT
+
+https://github.com/Alex0Blackwell/flappy-bird-terminal-game
