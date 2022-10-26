@@ -5,4 +5,7 @@ for i in range(N):
     for j in range (M):
         x.append('-')
     tab.append(x)
-print(tab)
+
+tab[1][0] = 5
+tab[0][1] = 1
+print(tab,'','')

@@ -15,4 +15,5 @@ size = 3 - szerokość rozwarcia rury:
 x = 5 - wysokość górnej strzałki rury:
 
 
-
+map[0][0] > lewy górny róg
+map[10][0] > lewy dolny róg
