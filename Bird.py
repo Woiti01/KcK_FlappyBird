@@ -10,9 +10,9 @@ class Bird:
 
     def jump(self):
         if self.position>0:
-            self.position = self.position + 1
+            self.position = self.position - 1
 
     def gravity(self):
-         if self.position<self.maxHeight:
-             self.position = self.position - 1
+         if self.position<self.maxHeight-1:
+             self.position = self.position + 1
 

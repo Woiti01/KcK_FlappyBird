@@ -3,40 +3,48 @@ from sys import displayhook
 import os
 from time import sleep
 import keyboard
+import curses
 
 from Level import *
 
-#main??
+# main??
 
-# jump = False
-# def on_space():
-#     return True
-# keyboard.add_hotkey('space', on_space())
+# addstr(y , x, string)
 
-def wyczysc():
-    clear = lambda: os.system(('cls'))
-    clear()
 
-def wyswietl(x):
-    wyczysc()
+scr = curses.initscr()
+scr.keypad(True)
+curses.noecho()
+curses.curs_set(0)
+jump = False
+x = False
+
+def on_space():
+    return True
+
+def on_q():
+    return True
+
+def wyswietl(scr, x):
     for i in range(len(x)):
         for j in range(len(x[i])):
-            print(x[i][j],sep='',end='')
-        print("\n")
-    for i in range(20):
-        print("=",end='',sep='')
-    print("\n")
+            scr.addstr(i, j, x[i][j])
+    scr.refresh()
 
-layout = Level(12, 100)
-ptak = Bird(10)
+x = 12
+y =82
+layout = Level(x,y)
+ptak = Bird(x)
 collision = False
 layout.addBird(ptak)
 
+wyswietl(scr, layout.viewMap())
 
-# print(boobs.viewMap())
-wyswietl(layout.viewMap())
+counter = 0
 
-while collision==False:
+while collision == False:
+    counter+=1
+    jump = keyboard.add_hotkey('space', on_space())
     sleep(0.5)
     layout.move()
     layout.move()
@@ -54,4 +62,7 @@ while collision==False:
     else:
         layout.fall(ptak)
     jump = False
-    wyswietl(layout.viewMap())
+    wyswietl(scr, layout.viewMap())
+    if counter>20:
+        break
+scr.getch()
