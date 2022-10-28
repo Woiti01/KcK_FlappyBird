@@ -4,65 +4,43 @@ import os
 from time import sleep
 import keyboard
 import curses
+import pygame
 
+from Screen import *
 from Level import *
-
-# main??
 
 # addstr(y , x, string)
 
+screen = Screen()
 
-scr = curses.initscr()
-scr.keypad(True)
-curses.noecho()
-curses.curs_set(0)
-jump = False
-x = False
 
-def on_space():
-    return True
+pygame.init()
+clock = pygame.time.Clock()
 
-def on_q():
-    return True
+x = 20
+y = 82
+fps = 12
 
-def wyswietl(scr, x):
-    for i in range(len(x)):
-        for j in range(len(x[i])):
-            scr.addstr(i, j, x[i][j])
-    scr.refresh()
-
-x = 12
-y =82
-layout = Level(x,y)
 ptak = Bird(x)
-collision = False
-layout.addBird(ptak)
-
-wyswietl(scr, layout.viewMap())
+layout = Level(x,y,ptak)
+jump = None
 
 counter = 0
 
-while collision == False:
-    counter+=1
-    jump = keyboard.add_hotkey('space', on_space())
-    sleep(0.5)
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.move()
-    layout.addCorrectPipe()
-    if jump == True:
-        layout.jump(ptak)
-    else:
-        layout.fall(ptak)
-    jump = False
-    wyswietl(scr, layout.viewMap())
-    if counter>20:
+while not layout.lost:
+    if keyboard.is_pressed("space"):
+        jump=True
+    if keyboard.is_pressed("q"):
         break
-scr.getch()
+    layout.move()
+    counter += 1
+    if counter%10==0:
+        layout.addCorrectPipe()
+        counter=0
+    if jump == True:
+        layout.jump()
+    else:
+        layout.fall()
+    jump = False
+    screen.showLevel(layout.viewMap())
+    clock.tick(fps)

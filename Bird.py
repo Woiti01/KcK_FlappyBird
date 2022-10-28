@@ -1,7 +1,7 @@
 class Bird:
 
     maxHeight = None
-    position = None
+    position = 0
     body = ['o','>']
 
     def __init__(self, N):

@@ -6,62 +6,70 @@ from Bird import *
 
 class Level:
     layout = []
-    M = 0
-    N = 0
+    pipe = ['|', 'v', '^']
+    blank = '-'
+    lost = False
     opening = 3
 
     #    M - ilość kolumn, N - ilość wierszy
-    def __init__(self, a, b):
+    def __init__(self, a, b, bird):
         self.N = a
         self.M = b
+        self.bird = bird
         for i in range(self.N):
             x = []
             for j in range(self.M):
-                x.append('-')
+                x.append(self.blank)
             self.layout.append(x)
+        for i in range(len(bird.body)):
+            self.layout[int(bird.position)][i + 1] = bird.body[i]
 
     def addCorrectPipe(self):
-        size = 3  # Opcja pozwalająca EWENTUALNIE zmienić rozmiar otworu
+        size = 6  # Opcja pozwalająca EWENTUALNIE zmienić rozmiar otworu
         x = randint(1, self.N - (size + 2))  #
         for i in range(x):
-            self.layout[i][self.M - 1] = '|'
-        self.layout[x][self.M - 1] = 'v'
+            self.layout[i][self.M - 1] = self.pipe[0]
+        self.layout[x][self.M - 1] = self.pipe[1]
         for i in range(x + 1, x + (size + 1)):
-            self.layout[i][self.M - 1] = '-'
-        self.layout[x + (size + 1)][self.M - 1] = '^'
+            self.layout[i][self.M - 1] = self.blank
+        self.layout[x + (size + 1)][self.M - 1] = self.pipe[2]
         for i in range(x + (size + 2), self.N):
-            self.layout[i][self.M - 1] = '|'
+            self.layout[i][self.M - 1] = self.pipe[0]
 
     def move(self):
         for i in range(self.N):
             for j in range(1, self.M):
-                if self.layout[i][j - 1] not in Bird.body:
+                if self.layout[i][j - 1] not in self.bird.body:
                     self.layout[i][j - 1] = self.layout[i][j]
-            self.layout[i][j] = '-'
-            self.layout[i][0] = '-'
-    def addBird(self, bird):
-        for i in range(len(bird.body)):
-            self.layout[int(bird.position)][i + 1] = bird.body[i]
+                else:
+                    if self.layout[i][j] in self.pipe:
+                        self.lost=True
+            self.layout[i][j] = self.blank
+            self.layout[i][0] = self.blank
 
-    # def moveAndAdd(self):
-    #     for i in range(self.N):
-    #         for j in range(1,self.M):
-    #             self.layout[i][j - 1]=self.layout[i][j]
-    #     self.addPipe(3)
+    def addBird(self):
+        side = 1                                                               #Odleglosc od krawedzi?
+        for i in range(len(self.bird.body)):
+            self.layout[int(self.bird.position)][i + side] = self.bird.body[i]
 
-    def jump(self, bird):
-        bird.jump()
-        for i in range(len(bird.body)):
-            self.layout[int(bird.position - 1)][i] = '-'
-            self.layout[int(bird.position - 1)][i+1] = '-'
-        self.addBird(bird)
+    def jump(self):
+        self.bird.jump()
+        for i in range(len(self.bird.body)):
+            if self.layout[int(self.bird.position)][i] in self.pipe:
+                self.lost = True
+            self.layout[int(self.bird.position + 1)][i] = self.blank
+            self.layout[int(self.bird.position + 1)][i+1] = self.blank
+        self.addBird()
 
-    def fall(self, bird):
-        bird.gravity()
-        for i in range(len(bird.body)):
-            self.layout[int(bird.position - 1)][i] = '-'
-            self.layout[int(bird.position - 1)][i+1] = '-'
-        self.addBird(bird)
+    def fall(self):
+        self.bird.gravity()
+        for i in range(len(self.bird.body)):
+            if self.layout[int(self.bird.position)][i] in self.pipe:
+                self.lost = True
+            self.layout[int(self.bird.position - 1)][i] = self.blank
+            self.layout[int(self.bird.position - 1)][i+1] = self.blank
+        self.addBird()
+
 
     def viewMap(self):
         return self.layout
