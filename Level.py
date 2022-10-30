@@ -1,3 +1,4 @@
+import logging
 from pprint import pprint
 from sys import displayhook
 from random import *
@@ -14,6 +15,7 @@ class Level:
 
     #    M - ilość kolumn, N - ilość wierszy
     def __init__(self, a, b, bird):
+        pygame.init()
         self.N = a
         self.M = b
         self.bird = bird
@@ -71,9 +73,23 @@ class Level:
             self.layout[int(self.bird.position - 1)][i+1] = self.blank
         self.addBird()
 
+    def changeBird(self, id):
+        self.bird.changeSkin(id)
+
+    def newGame(self):
+        tab = []
+        for i in range(self.N):
+            x = []
+            for j in range(self.M):
+                x.append(self.blank)
+            tab.append(x)
+        self.layout = tab
+        for i in range(len(self.bird.body)):
+            self.layout[int(self.bird.position)][i + 1] = self.bird.body[i]
+        self.lost = False
+
     def play(self,screen,fps):
 
-        pygame.init()
         clock = pygame.time.Clock()
         score = 0
         jump = None
@@ -94,6 +110,11 @@ class Level:
             jump = False
             screen.showLevel(self.viewMap(),score)
             clock.tick(fps)
+        screen.showPostGameScreen(score)
+        while True:
+            if keyboard.is_pressed("q"):
+                break
+        self.newGame()
         screen.clear()
     #     Miejsce na wywołanie ekranu porażki??? czy coś w tym stylu
     def viewMap(self):
