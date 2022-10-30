@@ -90,7 +90,7 @@ class Menu(object):
             elif key == curses.KEY_DOWN:
                 self.navigate(1)
 
-        self.window.clear()
+        # self.window.clear()
         self.panel.hide()
-        panel.update_panels()
+        # panel.update_panels()
         curses.doupdate()
