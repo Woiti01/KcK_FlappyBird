@@ -9,9 +9,17 @@ import pygame
 from Screen import *
 from Level import *
 
-# addstr(y , x, string)
 
-screen = Screen()
+def f1():
+    pass
+def f2():
+    pass
+def f3():
+    pass
+
+
+
+
 
 
 pygame.init()
@@ -19,28 +27,32 @@ clock = pygame.time.Clock()
 
 x = 20
 y = 82
+
+layout = Level(x,y,Bird(x))
+screen = Screen()
 fps = 12
+# play = staticmethod(layout.play(screen,fps))
+class Game(object):
+    def __init__(self, stdscreen):
+        self.screen = stdscreen
+        curses.curs_set(0)
 
-ptak = Bird(x)
-layout = Level(x,y,ptak)
-jump = None
+        graphics_items = [("Zmiana Ptaka: ", f1), ("Zmiana Kolorow", f2)]
+        graphics = Menu(graphics_items, self.screen)
 
-counter = 0
+        options_items = [("Zmiana poziomu trudności: ", f3)]
+        options = Menu(options_items, self.screen)
 
-while not layout.lost:
-    if keyboard.is_pressed("space"):
-        jump=True
-    if keyboard.is_pressed("q"):
-        break
-    layout.move()
-    counter += 1
-    if counter%10==0:
-        layout.addCorrectPipe()
-        counter=0
-    if jump == True:
-        layout.jump()
-    else:
-        layout.fall()
-    jump = False
-    screen.showLevel(layout.viewMap())
-    clock.tick(fps)
+        main_menu_items = [
+            ("Graj", "play", layout, screen, fps),
+            ("Wybory graficzne", graphics.display),
+            ("Opcje", options.display),
+        ]
+        main_menu = Menu(main_menu_items, self.screen)
+        main_menu.display()
+
+if __name__ == "__main__":
+    curses.wrapper(Game)
+
+
+

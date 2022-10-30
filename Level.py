@@ -2,12 +2,13 @@ from pprint import pprint
 from sys import displayhook
 from random import *
 from Bird import *
-
+import keyboard
+import pygame
 
 class Level:
     layout = []
     pipe = ['|', 'v', '^']
-    blank = '-'
+    blank = ' '
     lost = False
     opening = 3
 
@@ -70,6 +71,30 @@ class Level:
             self.layout[int(self.bird.position - 1)][i+1] = self.blank
         self.addBird()
 
+    def play(self,screen,fps):
 
+        pygame.init()
+        clock = pygame.time.Clock()
+        score = 0
+        jump = None
+
+        while not self.lost:
+            if keyboard.is_pressed("space"):
+                jump = True
+            if keyboard.is_pressed("q"):
+                break
+            self.move()
+            score += 1
+            if score % 10 == 0:
+                self.addCorrectPipe()
+            if jump == True:
+                self.jump()
+            else:
+                self.fall()
+            jump = False
+            screen.showLevel(self.viewMap(),score)
+            clock.tick(fps)
+        screen.clear()
+    #     Miejsce na wywołanie ekranu porażki??? czy coś w tym stylu
     def viewMap(self):
         return self.layout
