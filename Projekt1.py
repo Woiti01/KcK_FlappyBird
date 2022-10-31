@@ -22,12 +22,11 @@ class Game(object):
     def __init__(self, stdscreen):
         self.screen = stdscreen
         curses.curs_set(0)
-        bird = Bird(x, 0)
-
-        graphics_items = [("Zmiana Ptaka", "bird", bird), ("Zmiana Kolorow", f2)]
+        bird= Bird(x)
+        graphics_items = [("Zmiana Ptaka", "bird", screen, bird), ("Zmiana Kolorow", f2)]
         graphics = Menu(graphics_items, self.screen)
 
-        options_items = [("Zmiana poziomu trudności: ", f3)]
+        options_items = [("Zmiana poziomu trudności: ", "difficulty",screen, fps)]
         options = Menu(options_items, self.screen)
 
         main_menu_items = [
@@ -39,6 +38,9 @@ class Game(object):
         main_menu.display()
 
 if __name__ == "__main__":
+    screen.showPreGameScreen()
+    screen.getch()
+    screen.clear()
     curses.wrapper(Game)
 
 

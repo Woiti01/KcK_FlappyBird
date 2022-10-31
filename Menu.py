@@ -1,6 +1,6 @@
 import curses
 from curses import panel
-
+from Projekt1 import Game
 class Menu(object):
     def __init__(self, items, stdscreen):
         self.window = stdscreen.subwin(0, 0)
@@ -46,10 +46,12 @@ class Menu(object):
                     if (self.items[self.position][1] == "play"):
                         self.items[self.position][2].play(self.items[self.position][3], self.items[self.position][4])
                     elif (self.items[self.position][1] == "bird"):
-                        self.items[self.position][2].changeSkin()
-
+                        self.items[self.position][3].changeSkin(self.items[self.position][2].birdChange())
+                    elif (self.items[self.position][1] == "difficulty"):
+                        self.items[self.position][3] = self.items[self.position][2].difficultyChange()
                     else:
                         self.items[self.position][1]()
+                        self.window.clear()
 
             elif key == curses.KEY_UP:
                 self.navigate(-1)

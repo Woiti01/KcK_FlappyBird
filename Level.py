@@ -116,6 +116,6 @@ class Level:
                 break
         self.newGame()
         screen.clear()
-    #     Miejsce na wywołanie ekranu porażki??? czy coś w tym stylu
+
     def viewMap(self):
         return self.layout
