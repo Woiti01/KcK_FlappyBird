@@ -8,7 +8,7 @@ class Bird:
     body_2 = ['(',')','*']
     body_3 = ('8','=','=','D')
     bodies = [body_0,body_1,body_2,body_3]
-
+    diff = 1
     def __init__(self, N):
         self.position=N/2
         self.maxHeight=N
@@ -22,4 +22,7 @@ class Bird:
              self.position = self.position + 1
     def changeSkin(self, id):
         self.body = self.bodies[id%len(self.bodies)]
+
+    def changeDiff(self, id):
+        self.diff = id
 

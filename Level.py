@@ -88,8 +88,12 @@ class Level:
             self.layout[int(self.bird.position)][i + 1] = self.bird.body[i]
         self.lost = False
 
-    def play(self,screen,fps):
+    def play(self,screen):
 
+
+        if self.bird.diff==0: fps = 8
+        elif self.bird.diff==1: fps = 12
+        elif self.bird.diff==2: fps = 18
         clock = pygame.time.Clock()
         score = 0
         jump = None
@@ -108,7 +112,7 @@ class Level:
             else:
                 self.fall()
             jump = False
-            screen.showLevel(self.viewMap(),score)
+            screen.showLevel(self.viewMap(),score,fps)
             clock.tick(fps)
         screen.showPostGameScreen(score)
         while True:

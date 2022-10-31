@@ -22,7 +22,7 @@ class Screen:
         curses.noecho()
         curses.curs_set(0)
 
-    def showLevel(self, x, score):
+    def showLevel(self, x, score, fps):
         for i in range(len(x)):
             self.screen.addstr(i + 1, 0, "¦")
             self.screen.addstr(i + 1, len(x[i]) + 1, "¦")
@@ -37,6 +37,7 @@ class Screen:
         self.screen.addstr(len(x) + 2, 2, "Wcisnij q aby wyjsc z gry")
         self.screen.addstr(len(x) + 3, 2, "Za pomoca spacji lec do gory")
         self.screen.addstr(len(x) + 4, 2, "Wynik --> " + str((score // 10) * 100))
+        self.screen.addstr(len(x) + 5, 2, "Fps --> " + str(fps))
         self.screen.refresh()
 
     def showPreGameScreen(self):
@@ -95,9 +96,7 @@ class Screen:
                 id = id + 1
             elif x == "\n" or "q":
                 self.clear()
-                if id==0: return 8
-                elif id == 1: return 12
-                elif id == 2: return 18
+                return id
 
     def getch(self):
         return self.screen.getch()

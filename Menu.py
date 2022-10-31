@@ -44,11 +44,11 @@ class Menu(object):
                     break
                 else:
                     if (self.items[self.position][1] == "play"):
-                        self.items[self.position][2].play(self.items[self.position][3], self.items[self.position][4])
+                        self.items[self.position][2].play(self.items[self.position][3])
                     elif (self.items[self.position][1] == "bird"):
                         self.items[self.position][3].changeSkin(self.items[self.position][2].birdChange())
                     elif (self.items[self.position][1] == "difficulty"):
-                        self.items[self.position][3] = self.items[self.position][2].difficultyChange()
+                        self.items[self.position][3].changeDiff(self.items[self.position][2].difficultyChange())
                     else:
                         self.items[self.position][1]()
                         self.window.clear()

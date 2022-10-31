@@ -2,8 +2,7 @@ from Screen import *
 from Level import *
 from Menu import *
 
-def f1():
-    pass
+
 def f2():
     pass
 def f3():
@@ -17,22 +16,23 @@ x = 20
 y = 82
 
 screen = Screen()
-fps = 12
+
+
 class Game(object):
+
     def __init__(self, stdscreen):
         self.screen = stdscreen
         curses.curs_set(0)
         bird= Bird(x)
-        graphics_items = [("Zmiana Ptaka", "bird", screen, bird), ("Zmiana Kolorow", f2)]
+        graphics_items = [["Zmiana Ptaka", "bird", screen, bird], ["Zmiana Kolorow", f2]]
         graphics = Menu(graphics_items, self.screen)
-
-        options_items = [("Zmiana poziomu trudności: ", "difficulty",screen, fps)]
+        options_items = [["Zmiana poziomu trudności: ", "difficulty", screen, bird]]
         options = Menu(options_items, self.screen)
 
         main_menu_items = [
-            ("Graj", "play", Level(x,y,bird), screen, fps),
-            ("Wybory graficzne", graphics.display),
-            ("Opcje", options.display),
+            ["Graj", "play", Level(x,y,bird), screen],
+            ["Wybory graficzne", graphics.display],
+            ["Opcje", options.display],
         ]
         main_menu = Menu(main_menu_items, self.screen)
         main_menu.display()
