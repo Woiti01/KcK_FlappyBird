@@ -6,8 +6,7 @@ class Bird:
     body_0 = ['o','>']
     body_1 = ['=','D']
     body_2 = ['(',')','*']
-    body_3 = ('8','=','=','D')
-    bodies = [body_0,body_1,body_2,body_3]
+    bodies = [body_0,body_1,body_2]
     diff = 1
     def __init__(self, N):
         self.position=N/2

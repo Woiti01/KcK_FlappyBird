@@ -1,8 +1,12 @@
 import curses
 from curses import panel
-from Projekt1 import Game
+
+import keyboard
+import pygame
+from pygame import mixer
 class Menu(object):
     def __init__(self, items, stdscreen):
+        pygame.init()
         self.window = stdscreen.subwin(0, 0)
         self.window.keypad(1)
         self.panel = panel.new_panel(self.window)
@@ -24,7 +28,9 @@ class Menu(object):
         self.panel.top()
         self.panel.show()
         self.window.clear()
-
+        beep_Sound = mixer.Sound("Soundtrack/Beep.wav")
+        beep_Sound.set_volume(0.1)
+        boop_Sound = mixer.Sound("Soundtrack/Boop.wav")
         while True:
             self.window.refresh()
             curses.doupdate()
@@ -41,15 +47,19 @@ class Menu(object):
 
             if key in [curses.KEY_ENTER, ord("\n")]:
                 if self.position == len(self.items) - 1:
+                    boop_Sound.play(1,1000)
                     break
                 else:
                     if (self.items[self.position][1] == "play"):
                         self.items[self.position][2].play(self.items[self.position][3])
                     elif (self.items[self.position][1] == "bird"):
+                        beep_Sound.play(1)
                         self.items[self.position][3].changeSkin(self.items[self.position][2].birdChange())
                     elif (self.items[self.position][1] == "difficulty"):
+                        beep_Sound.play(1)
                         self.items[self.position][3].changeDiff(self.items[self.position][2].difficultyChange())
                     else:
+                        beep_Sound.play(1)
                         self.items[self.position][1]()
                         self.window.clear()
 

@@ -5,14 +5,14 @@ from random import *
 from Bird import *
 import keyboard
 import pygame
+from pygame import mixer
 
 class Level:
     layout = []
     pipe = ['|', 'v', '^']
-    blank = ' '
+    blank = '-'
     lost = False
     opening = 3
-
     #    M - ilość kolumn, N - ilość wierszy
     def __init__(self, a, b, bird):
         pygame.init()
@@ -89,15 +89,15 @@ class Level:
         self.lost = False
 
     def play(self,screen):
-
-
         if self.bird.diff==0: fps = 8
         elif self.bird.diff==1: fps = 12
         elif self.bird.diff==2: fps = 18
         clock = pygame.time.Clock()
         score = 0
         jump = None
-
+        mixer.music.load("Soundtrack/Camel by Camel.wav")
+        mixer.music.set_volume(0.1)
+        mixer.music.play(-1)
         while not self.lost:
             if keyboard.is_pressed("space"):
                 jump = True
@@ -114,9 +114,13 @@ class Level:
             jump = False
             screen.showLevel(self.viewMap(),score,fps)
             clock.tick(fps)
+        mixer.music.stop()
+        postgamescreen = mixer.music.load("Soundtrack/Determination.wav")
+        mixer.music.play(1)
         screen.showPostGameScreen(score)
         while True:
             if keyboard.is_pressed("q"):
+                mixer.music.stop()
                 break
         self.newGame()
         screen.clear()

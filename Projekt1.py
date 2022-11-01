@@ -24,7 +24,7 @@ class Game(object):
         self.screen = stdscreen
         curses.curs_set(0)
         bird= Bird(x)
-        graphics_items = [["Zmiana Ptaka", "bird", screen, bird], ["Zmiana Kolorow", f2]]
+        graphics_items = [["Zmiana Ptaka", "bird", screen, bird]]
         graphics = Menu(graphics_items, self.screen)
         options_items = [["Zmiana poziomu trudności: ", "difficulty", screen, bird]]
         options = Menu(options_items, self.screen)
