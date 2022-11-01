@@ -10,7 +10,7 @@ from pygame import mixer
 class Level:
     layout = []
     pipe = ['|', 'v', '^']
-    blank = '-'
+    blank = ' '
     lost = False
     opening = 3
     #    M - ilość kolumn, N - ilość wierszy
