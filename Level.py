@@ -1,8 +1,4 @@
-import logging
-from pprint import pprint
-from sys import displayhook
 from random import *
-from Bird import *
 import keyboard
 import pygame
 from pygame import mixer
@@ -95,9 +91,12 @@ class Level:
         clock = pygame.time.Clock()
         score = 0
         jump = None
-        mixer.music.load("Soundtrack/Camel by Camel.wav")
-        mixer.music.set_volume(0.1)
-        mixer.music.play(-1)
+        try:
+            mixer.music.load("Soundtrack/Camel by Camel.wav")
+            mixer.music.set_volume(0.1)
+            mixer.music.play(-1)
+        except:
+            pass
         while not self.lost:
             if keyboard.is_pressed("space"):
                 jump = True
@@ -114,10 +113,13 @@ class Level:
             jump = False
             screen.showLevel(self.viewMap(),score,fps)
             clock.tick(fps)
-        mixer.music.stop()
-        postgamescreen = mixer.music.load("Soundtrack/Determination.wav")
-        mixer.music.play(1)
-        screen.showPostGameScreen(score)
+        try:
+            mixer.music.stop()
+            mixer.music.load("Soundtrack/Determination.wav")
+            mixer.music.play(1)
+            screen.showPostGameScreen(score)
+        except:
+            pass
         while True:
             if keyboard.is_pressed("q"):
                 mixer.music.stop()

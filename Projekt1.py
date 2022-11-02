@@ -3,18 +3,8 @@ from Level import *
 from Menu import *
 
 
-def f2():
-    pass
-def f3():
-    pass
-
-
-pygame.init()
-clock = pygame.time.Clock()
-
 x = 20
 y = 82
-
 screen = Screen()
 
 

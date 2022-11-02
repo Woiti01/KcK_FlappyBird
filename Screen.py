@@ -1,11 +1,7 @@
 import curses
-from curses import panel
-
 from _curses import use_default_colors
-
-from Bird import *
 from Level import *
-
+from Bird import *
 
 class Screen:
     screen = None
@@ -25,8 +21,6 @@ class Screen:
         curses.cbreak()
         curses.noecho()
         curses.curs_set(0)
-        #self.createColourBoard()
-
 
     def createColourBoard(self):
         curses.start_color()
@@ -45,7 +39,7 @@ class Screen:
                     self.screen.addstr(i + 1, j + 1, x[i][j], curses.color_pair(82) | curses.A_BOLD)
                 elif x[i][j] == Level.blank:
                     self.screen.addstr(i + 1, j + 1, x[i][j], curses.color_pair(28))
-                elif x[i][j] in Bird.body:
+                elif x[i][j] in Bird.bodies[0] or x[i][j] in Bird.bodies[1] or x[i][j] in Bird.bodies[2]:
                     self.screen.addstr(i + 1, j + 1, x[i][j],  curses.color_pair(226))
                 else:
                     self.screen.addstr(i + 1, j + 1, x[i][j])  # Wypisanie mapy :
@@ -75,9 +69,6 @@ class Screen:
         self.screen.addstr(11, 40, "Twój wynik to:")
         self.screen.addstr(12, 40, str((score // 10) * 100))
         self.screen.addstr(13, 40, "Wcisnij q aby wrocic do menu")
-        self.screen.refresh()
-
-    def refresh(self):
         self.screen.refresh()
 
     def clear(self):

@@ -28,9 +28,12 @@ class Menu(object):
         self.panel.top()
         self.panel.show()
         self.window.clear()
-        beep_Sound = mixer.Sound("Soundtrack/Beep.wav")
-        beep_Sound.set_volume(0.1)
-        boop_Sound = mixer.Sound("Soundtrack/Boop.wav")
+        try:
+            beep_Sound = mixer.Sound("Soundtrack/Beep.wav")
+            beep_Sound.set_volume(0.1)
+            boop_Sound = mixer.Sound("Soundtrack/Boop.wav")
+        except:
+            pass
         while True:
             self.window.refresh()
             curses.doupdate()
@@ -47,19 +50,31 @@ class Menu(object):
 
             if key in [curses.KEY_ENTER, ord("\n")]:
                 if self.position == len(self.items) - 1:
-                    boop_Sound.play(1,1000)
+                    try:
+                        boop_Sound.play(1,1000)
+                    except:
+                        pass
                     break
                 else:
                     if (self.items[self.position][1] == "play"):
                         self.items[self.position][2].play(self.items[self.position][3])
                     elif (self.items[self.position][1] == "bird"):
-                        beep_Sound.play(1)
+                        try:
+                            beep_Sound.play(1)
+                        except:
+                            pass
                         self.items[self.position][3].changeSkin(self.items[self.position][2].birdChange())
                     elif (self.items[self.position][1] == "difficulty"):
-                        beep_Sound.play(1)
+                        try:
+                            beep_Sound.play(1)
+                        except:
+                            pass
                         self.items[self.position][3].changeDiff(self.items[self.position][2].difficultyChange())
                     else:
-                        beep_Sound.play(1)
+                        try:
+                            beep_Sound.play(1)
+                        except:
+                            pass
                         self.items[self.position][1]()
                         self.window.clear()
 
